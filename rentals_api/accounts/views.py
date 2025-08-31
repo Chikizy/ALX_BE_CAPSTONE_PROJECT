@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from serializers import UserRegistrationSerialiser, LoginSerializer
+from .serializers import UserRegistrationSerialiser, LoginSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # Create your views here.
@@ -31,7 +31,7 @@ class RegisterView(APIView):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
-    #allow all users to login
+    # allow all users to login
     permission_classes = [AllowAny]
 
     def post(self, request):
