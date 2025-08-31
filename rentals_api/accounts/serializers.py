@@ -7,7 +7,7 @@ def validate_role(value):
     valid_roles = [choice[0] for choice in CustomUser.ROLE_CHOICES]
     if value not in valid_roles:
         raise serializers.ValidationError("Ensure Role is 'Owner' or 'Renter'.")
-        return value
+    return value
     
 class UserRegistrationSerialiser(serializers.ModelSerializer):
     # serialise password making it write ony to avoid exposure

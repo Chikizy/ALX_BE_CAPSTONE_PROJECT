@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from .serializers import UserRegistrationSerialiser, LoginSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 
 # Create your views here.
 class RegisterView(APIView):
@@ -13,22 +14,22 @@ class RegisterView(APIView):
 
     def post(self, request):
     # attach incoming JSON data to a serializer
-    serializer = UserRegistrationSerialiser(data=request.data)
-    #   validate data
-    if serializer.is_valid():
-        user = serializer.save()
-        # fetch user token(created during registration)
-        token = Token.objects.get(user=user)
-        #Formula: return Response(<dict>, status=<status_code>)
-        # send respond back as JSON with given HTTP status
-        return Response({
-        # convert user object into JSON-safe data
-        'user': UserRegistrationSerialiser(user).data,
-        'token': token.key
-        }, status=status.HTTP_201_CREATED)
-    # Formula: return Response(serializer.errors, status=400)
-    # show error message if validation fails
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UserRegistrationSerialiser(data=request.data)
+        #   validate data
+        if serializer.is_valid():
+            user = serializer.save()
+            # fetch user token(created during registration)
+            token = Token.objects.get(user=user)
+            #Formula: return Response(<dict>, status=<status_code>)
+            # send respond back as JSON with given HTTP status
+            return Response({
+            # convert user object into JSON-safe data
+            'user': UserRegistrationSerialiser(user).data,
+            'token': token.key
+            }, status=status.HTTP_201_CREATED)
+        # Formula: return Response(serializer.errors, status=400)
+        # show error message if validation fails
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
     # allow all users to login
@@ -49,7 +50,7 @@ class LoginView(APIView):
                 token, _ = Token.objects.get_or_create(user=user)
 
                 return Response({
-                    'user': UserSerializer(user).data,
+                    'user': UserRegistrationSerializer(user).data,
                     'token': token.key
                 }, status=status.HTTP_200_OK)
             
@@ -59,7 +60,7 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfileView(APIView):
-    permission_classes = {AllowAny} 
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):          
         user = request.user
