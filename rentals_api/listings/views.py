@@ -36,4 +36,10 @@ class RentalListingListCreateView(generics.ListCreateAPIView):
     # implement keyword search; format: <url>/?search=<keyword>
     search_fields = ['title', 'description', 'address']
 
-    def perform_create
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class RentalListingDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RentalListing.objects.all()
+    serializer_class = RentalListingSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
