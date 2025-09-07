@@ -14,7 +14,7 @@ class RegisterView(APIView):
 
     def post(self, request):
     # attach incoming JSON data to a serializer
-        serializer = UserRegistrationSerialiser(data=request.data)
+        serializer = UserRegistrationSerializer(data=request.data)
         #   validate data
         if serializer.is_valid():
             user = serializer.save()
@@ -24,7 +24,7 @@ class RegisterView(APIView):
             # send respond back as JSON with given HTTP status
             return Response({
             # convert user object into JSON-safe data
-            'user': UserRegistrationSerialiser(user).data,
+            'user': UserRegistrationSerializer(user).data,
             'token': token.key
             }, status=status.HTTP_201_CREATED)
         # Formula: return Response(serializer.errors, status=400)
