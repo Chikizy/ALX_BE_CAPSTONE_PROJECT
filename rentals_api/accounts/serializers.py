@@ -9,7 +9,7 @@ def validate_role(value):
         raise serializers.ValidationError("Ensure Role is 'Owner' or 'Renter'.")
     return value
     
-class UserRegistrationSerialiser(serializers.ModelSerializer):
+class UserRegistrationSerializer(serializers.ModelSerializer):
     # serialise password making it write ony to avoid exposure
     password = serializers.CharField(write_only=True)
     role = serializers.CharField(validators=[validate_role])

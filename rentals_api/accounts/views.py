@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserRegistrationSerialiser, LoginSerializer
+from .serializers import UserRegistrationSerializer, LoginSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
