@@ -149,4 +149,11 @@ TESTING
         URL: URL: http://localhost:8000/api/listings/1/
         Headers: Authorization: Token <renter_token>
         Body (JSON):
-        
+            {
+                "username": "testowner",
+                "email": "owner@example.com",
+                "password": "securepassword123",
+                "role": "owner",
+                "bio": "Property owner",
+                "contact_info": "0123-456-789"
+            }
