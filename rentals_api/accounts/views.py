@@ -66,5 +66,5 @@ class ProfileView(APIView):
         user = request.user
         # Formula: serializer = SerializerClass(instance)
         # Turn the user object into JSON data
-        serializer = UserRegistrationSerialiser(user)
+        serializer = UserRegistrationSerializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
