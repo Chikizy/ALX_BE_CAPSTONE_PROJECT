@@ -22,14 +22,21 @@ class RegisterView(APIView):
             token = Token.objects.get(user=user)
             #Formula: return Response(<dict>, status=<status_code>)
             # send respond back as JSON with given HTTP status
-            return Response({
-            # convert user object into JSON-safe data
-            'user': UserRegistrationSerializer(user).data,
-            'token': token.key
-            }, status=status.HTTP_201_CREATED)
+            return Response(
+                {
+                    'message': 'User registered successfully!', #success message
+                    # convert user object into JSON-safe data
+                    'user': UserRegistrationSerializer(user).data,
+                    'token': token.key
+                }, status=status.HTTP_201_CREATED)
         # Formula: return Response(serializer.errors, status=400)
         # show error message if validation fails
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {
+                'message': 'Registration failed!'
+                'error': serializer.errors
+            }, 
+            status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
     # allow all users to login

@@ -26,7 +26,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 # Listing and create view:
 class RentalListingListCreateView(generics.ListCreateAPIView):
-    queryset = RentalListing.objects.all()
+    queryset = RentalListing.objects.all().order_by('-created_at')
     serializer_class = RentalListingSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     pagination_class = StandardResultsSetPagination

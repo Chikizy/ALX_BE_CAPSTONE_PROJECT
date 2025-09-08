@@ -37,123 +37,132 @@ Rental Listings:
 TESTING
 
 1. TEST USER AUTHENTICATION
-    **REGISTER A USER:**
-    Request:
-        Method: **POST**
-        URL: http://localhost:8000/rentals_api/accounts/register/
-        Body (JSON):
-        {
-            "username": "testowner",
-            "email": "owner@example.com",
-            "password": "securepassword123",
-            "role": "owner",
-            "bio": "Property owner",
-            "contact_info": "0123-456-789"
-        }
+**REGISTER A USER:**
+Request:
+Method: **POST**
+URL: http://localhost:8000/rentals_api/accounts/register/
+Body (JSON):
+{
+    "username": "testowner",
+    "email": "owner@example.com",
+    "password": "securepassword123",
+    "role": "owner",
+    "bio": "Property owner",
+    "contact_info": "0123-456-789"
+}
 
-    **TEST INVALID ROLE:**
-    Request:
-        Method: **POST**
-        URL: http://localhost:8000/rentals_api/accounts/register/
-        Body (JSON):
-        {
-            "username": "testrole",
-            "email": "roletest@example.com",
-            "password": "securepassword111",
-            "role": "free",
-            "bio": "Property renter",
-            "contact_info": "0123-456-7891"
-        }
+{
+    "username": "testrenter",
+    "email": "renter@example.com",
+    "password": "securepassword123",
+    "role": "renter",
+    "bio": "Property renter",
+    "contact_info": "1234"
+}
+
+**TEST INVALID ROLE:**
+Request:
+Method: **POST**
+URL: http://localhost:8000/rentals_api/accounts/register/
+Body (JSON):
+{
+    "username": "testrole",
+    "email": "roletest@example.com",
+    "password": "securepassword111",
+    "role": "free",
+    "bio": "Property renter",
+    "contact_info": "0123-456-7891"
+}
         
-    **LOGIN**
-    Request:
-        Method: **POST**
-        URL: http://localhost:8000/rentals_api/accounts/login/
-        Body (JSON):
-        {
-            "username": "testowner",
-            "password": "securepassword123"
-        }
-
-    **RETRIEVE A PROFILE**
-        Request:
-            Method: **GET**
-            URL: http://localhost:8000/rentals_api/accounts/profile/
-        Headers: Authorization: Token <user-token>
+**LOGIN**
+Request:
+Method: **POST**
+URL: http://localhost:8000/rentals_api/accounts/login/
+Body (JSON):
+{
+    "username": "testowner",
+    "password": "securepassword123"
+}
+f67dfaa56b36b661285887288a359cbefaccf99c
+**RETRIEVE A PROFILE**
+Request:
+Method: **GET**
+URL: http://localhost:8000/rentals_api/accounts/profile/
+Headers: Authorization: Token <user-token>
 
 2.  TEST RENTAL LISTINGS
     Owners can create, retrieve, update and del.ete listings as long as the listing creator is matches the user sending the 'delete' request
     Renters can only retrieve or read listings.
 
-    **CREATE A LISTING (OWNER):**
-    Request:
-        **POST**
-        URL: http://localhost:8000/api/listings/
-        Headers: Authorization: Token <owner_token>
-        Body (JSON):
-        {
-            "title": "Cozy Beach House",
-            "description": "A lovely beachfront property.",
-            "address": "123 Ocean Drive",
-            "price_per_night": 150.00,
-            "availability_dates": {"start": "2025-09-01", "end": "2025-09-30"}
-        }
-        
-    **LIST ALL LISTINGS**
-    Request:
-        **GET**
-        URL: http://localhost:8000/api/listings/
-        Headers: Authorization: Token <owner_token or renter_token>
+**CREATE A LISTING (OWNER):**
+Request:
+**POST**
+URL: http://localhost:8000/rentals_api/listings/
+Headers: Authorization: Token <owner_token>
+Body (JSON):
+{
+    "title": "Cozy Beach House",
+    "description": "A lovely beachfront property.",
+    "address": "123 Ocean Drive",
+    "price_per_night": 150.00,
+    "availability_dates": {"start": "2025-09-01", "end": "2025-09-30"}
+}
 
-    **FILTER LISTINGS**
-    Request:
-        **GET**
-        URL: http://localhost:8000/api/listings/?price_per_night=150.00
-        Headers: Authorization: Token <owner_token or renter_token>
+**LIST ALL LISTINGS**
+Request:
+**GET**
+URL: http://localhost:8000/rentals_api/listings/
+Headers: Authorization: Token <owner_token or renter_token>
 
-    **SEARCH LISTINGS**
-    Request:
-        **GET**
-        URL: http://localhost:8000/api/listings/?search=beach
-        Headers: Authorization: Token <owner_token or renter_token>
+**FILTER LISTINGS**
+Request:
+**GET**
+URL: http://localhost:8000/rentals_api/listings/?price_per_night=150.00
+Headers: Authorization: Token <owner_token or renter_token>
 
-    **RETRIEVE A LISTING**
-        Request:
-            **GET**
-            URL: http://localhost:8000/api/listings/1/
-            Headers: Authorization: Token <owner_token or renter_token>
-    
-    **UPDATE A LISTING**
-    Request:
-        **PUT**
-        URL: http://localhost:8000/api/listings/1/
-        Headers: Authorization: Token <owner_token or renter_token>
-        Body (JSON):
-        {
-            "title": "Updated Beach House",
-            "description": "A lovely beachfront property.",
-            "address": "123 Ocean Drive",
-            "price_per_night": 175.00,
-            "availability_dates": {"start": "2025-10-01", "end": "2025-10-31"}
-        }
+**SEARCH LISTINGS**
+Request:
+**GET**
+URL: http://localhost:8000/rentals_api/listings/?search=beach
+Headers: Authorization: Token <owner_token or renter_token>
 
-    **DELETE A LISTING(OWNER)**
-    Request:
-        **DELETE**
-        URL: http://localhost:8000/api/listings/1/
-       Headers: Authorization: Token <owner_token>
+**RETRIEVE A LISTING**
+Request:
+**GET**
+URL: http://localhost:8000/rentals_api/listings/1/
+Headers: Authorization: Token <owner_token or renter_token>
 
-    **TEST UNAUTHORIZED ACTION(RENTER)**
-    Request:
-        **POST**
-        URL: URL: http://localhost:8000/api/listings/1/
-        Headers: Authorization: Token <renter_token>
-        Body (JSON):
-            {
-                "username": "testowner",
-                "email": "owner@example.com",
-                "password": "securepassword123",
-                "role": "owner",
-                "bio": "Property owner",
-                "contact_info": "0123-456-789"
-            }
+**UPDATE A LISTING**
+Request:
+**PUT**
+URL: http://localhost:8000/rentals_api/listings/1/
+Headers: Authorization: Token <owner_token or renter_token>
+Body (JSON):
+{
+    "title": "Updated Beach House",
+    "description": "A lovely beachfront property.",
+    "address": "123 Ocean Drive",
+    "price_per_night": 175.00,
+    "availability_dates": {"start": "2025-10-01", "end": "2025-10-31"}
+}
+
+**DELETE A LISTING(OWNER)**
+Request:
+**DELETE**
+URL: http://localhost:8000/rentals_api/listings/1/
+Headers: Authorization: Token <owner_token>
+
+**TEST UNAUTHORIZED ACTION(RENTER)**
+Request:
+**POST**
+URL: URL: http://localhost:8000/rentals_api/listings/1/
+Headers: Authorization: Token <renter_token>
+Body (JSON):
+{
+    "username": "testowner",
+    "email": "owner@example.com",
+    "password": "securepassword123",
+    "role": "owner",
+    "bio": "Property owner",
+    "contact_info": "0123-456-789"
+}
