@@ -33,7 +33,7 @@ class RegisterView(APIView):
         # show error message if validation fails
         return Response(
             {
-                'message': 'Registration failed!'
+                'message': 'Registration failed!',
                 'error': serializer.errors
             }, 
             status=status.HTTP_400_BAD_REQUEST)
